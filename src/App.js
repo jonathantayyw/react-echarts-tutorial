@@ -5,29 +5,29 @@ import { populationDataMale } from "./DataMale";
 
 class App extends Component {
   getOption = () => {
-    let arr = [];
-    let dates = [];
+    let districts = [];
+    let years = [];
     Object.entries(populationDataFemale).forEach(entry => {
-      dates = [...dates, entry[0]];
-      entry[1].map(e => {
-        arr = [...arr, e.name];
+      years = [...years, entry[0]];
+      entry[1].forEach(e => {
+        districts = [...districts, e.name];
       });
     });
-    let areas = [...new Set(arr)];
+    let uniqueDistricts = [...new Set(districts)];
 
-    let options = dates.map(date => {
+    let options = years.map(year => {
       let obj = {};
       obj.title = {
-        text: `Population of Singapore by District, ${date}`
+        text: `Population of Singapore by District, ${year}`
       };
       obj.series = [
         {
           stack: "group",
-          data: populationDataFemale[date]
+          data: populationDataFemale[year]
         },
         {
           stack: "group",
-          data: populationDataMale[date]
+          data: populationDataMale[year]
         }
       ];
       return obj;
@@ -35,16 +35,12 @@ class App extends Component {
 
     return {
       baseOption: {
-        backgroundColor: "#fff",
-        color: [
-          "#e91e63 ", 
-          "#354EF6",
-      ],
+        color: ["#e91e63 ", "#354EF6"],
         timeline: {
           autoPlay: true,
           axisType: "category",
           bottom: 20,
-          data: dates,
+          data: years,
           height: null,
           inverse: true,
           left: null,
@@ -90,7 +86,7 @@ class App extends Component {
         title: {
           subtext: "Data from the Singapore Department of Statistics",
           textAlign: "left",
-          left: "5%",
+          left: "5%"
         },
         tooltip: { backgroundColor: "#555", borderWidth: 0, padding: 10 },
         legend: {
@@ -131,7 +127,7 @@ class App extends Component {
             },
             axisLine: { lineStyle: { color: "#aaa" }, show: true },
             axisTick: { show: false },
-            data: areas,
+            data: uniqueDistricts,
             // name: "District",
             splitLine: { show: false },
             type: "category"
@@ -161,13 +157,11 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <ReactEcharts
-          option={this.getOption()}
-          style={{ height: "80vh", left: 50, top: 50, width: "90vw" }}
-          opts={{ renderer: "svg" }}
-        />
-      </div>
+      <ReactEcharts
+        option={this.getOption()}
+        style={{ height: "80vh", left: 50, top: 50, width: "90vw" }}
+        opts={{ renderer: "svg" }}
+      />
     );
   }
 }
