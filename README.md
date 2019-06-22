@@ -1,7 +1,9 @@
 ## Running the project
 
->> git clone https://github.com/jonathantayyw/react-echarts-tutorial.git
+```sh
+git clone https://github.com/jonathantayyw/react-echarts-tutorial.git
 
->> npm install
+npm install
 
->> npm start
+npm start
+```
