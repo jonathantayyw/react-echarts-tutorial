@@ -37,7 +37,10 @@ class App extends Component {
     return {
       baseOption: {
         backgroundColor: "#fff",
-        color: ["#333", "#354EF6"],
+        color: [
+          "#e91e63 ", 
+          "#354EF6",
+      ],
         timeline: {
           autoPlay: true,
           axisType: "category",
@@ -68,7 +71,7 @@ class App extends Component {
             color: "#aaa"
           },
           checkpointStyle: {
-            color: "#333",
+            color: "#354EF6",
             borderColor: "transparent",
             borderWidth: 2
           },
