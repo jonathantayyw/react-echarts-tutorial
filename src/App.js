@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import ReactEcharts from "echarts-for-react";
-import { populationData } from "./Data";
 import { populationDataFemale } from "./DataFemale";
 import { populationDataMale } from "./DataMale";
 
@@ -165,8 +164,6 @@ class App extends Component {
       <div className="App">
         <ReactEcharts
           option={this.getOption()}
-          notMerge={true}
-          lazyUpdate={true}
           style={{ height: "80vh", left: 50, top: 50, width: "90vw" }}
           opts={{ renderer: "svg" }}
         />
