@@ -1,7 +1,7 @@
-## Steps to Run Project
+## Running the project
 
-git clone https://github.com/jonathantayyw/react-echarts-tutorial.git
+>> git clone https://github.com/jonathantayyw/react-echarts-tutorial.git
 
-npm install
+>> npm install
 
-npm start
+>> npm start
