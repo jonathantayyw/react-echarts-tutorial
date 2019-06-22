@@ -1,5 +1,3 @@
-export const dataPop = {};
-
 let data = [
     {
         "id": "2",
@@ -78304,23 +78302,52 @@ let data = [
 ];
 
 let years = [...new Set(data.map(e => e.year))]
-let areas = [...new Set(data.map(e => e.planning_area))]
+let total = data.filter(f => f.gender === "Total");
+let female = data.filter(f => f.gender === "Female");
+let male = data.filter(f => f.gender === "Male");
 
+export const dataTotal = {}
+export const dataFemale = {}
+export const dataMale = {}
 
-let total = dataPop.Total = data.filter(f => f.gender === "Total")
-let dataTotal = {}
 years.forEach(year => {
     let obj = {}
     obj[year] = []
     total.forEach(d => {
         if(d.year === year) {
             let o = {}
-            o.planning_area = d.planning_area;
-            o.total = d.total;
+            o.name = d.planning_area;
+            o.value = d.total;
             obj[year].push(o)
         }
     })
-    Object.assign(dataTotal,  obj )
+
+    let objF = {}
+    objF[year] = []
+    female.forEach(d => {
+        if(d.year === year) {
+            let o = {}
+            o.name = d.planning_area;
+            o.value = d.total;
+            objF[year].push(o)
+        }
+    })
+
+    let objM = {}
+    objM[year] = []
+    male.forEach(d => {
+        if(d.year === year) {
+            let o = {}
+            o.name = d.planning_area;
+            o.value = d.total;
+            objM[year].push(o)
+        }
+    })
+    Object.assign(dataTotal, obj )
+    Object.assign(dataFemale, objF )
+    Object.assign(dataMale, objM )
 })
     
-console.log('dataTotal', dataTotal)
+// console.log('dataTotal', dataTotal)
+// console.log('dataFemale', dataFemale);
+// console.log('dataMale', dataMale);

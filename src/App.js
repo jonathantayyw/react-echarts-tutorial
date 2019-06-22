@@ -1,34 +1,43 @@
 import React, { Component } from "react";
 import ReactEcharts from "echarts-for-react";
 import { populationData } from "./Data";
+import { populationDataFemale } from "./DataFemale";
+import { populationDataMale } from "./DataMale";
 
 class App extends Component {
   getOption = () => {
     let arr = [];
     let dates = [];
-    let options = [];
-    Object.entries(populationData).forEach(entry => {
+    Object.entries(populationDataFemale).forEach(entry => {
       dates = [...dates, entry[0]];
       entry[1].map(e => {
         arr = [...arr, e.name];
       });
+    });
+    let areas = [...new Set(arr)];
+
+    let options = dates.map(date => {
       let obj = {};
       obj.title = {
-        text: `Singapore Population by District, ${entry[0]}`
+        text: `Population of Singapore by District, ${date}`
       };
       obj.series = [
         {
-          data: entry[1]
+          stack: "group",
+          data: populationDataFemale[date]
+        },
+        {
+          stack: "group",
+          data: populationDataMale[date]
         }
       ];
-      options = [...options, obj];
+      return obj;
     });
-    let areas = [...new Set(arr)];
 
     return {
       baseOption: {
         backgroundColor: "#fff",
-        color: ["#354EF6"],
+        color: ["#333", "#354EF6"],
         timeline: {
           autoPlay: true,
           axisType: "category",
@@ -39,20 +48,20 @@ class App extends Component {
           left: null,
           orient: "vertical",
           playInterval: 1000,
-          right: 40,
+          right: 0,
           top: 20,
           width: 55,
           label: {
             normal: {
               textStyle: {
                 color: "#aaa"
-              },
+              }
             },
             emphasis: {
               textStyle: {
                 color: "#333"
               }
-            },
+            }
           },
           symbol: "none",
           lineStyle: {
@@ -74,28 +83,25 @@ class App extends Component {
               color: "#5d71f7",
               borderColor: "#5d71f7"
             }
-          },
+          }
         },
         title: {
           subtext: "Data from the Singapore Department of Statistics",
-          textAlign: "center",
-          left: "50%",
-          top: "0%"
+          textAlign: "left",
+          left: "5%",
         },
-        tooltip: { backgroundColor: "#333", borderWidth: 1, padding: 10 },
-        // legend: {
-        //   x: "right",
-        //   data: ["第一产业", "第二产业", "第三产业", "GDP", "金融", "房地产"],
-        //   selected: {
-        //     GDP: false,
-        //     金融: false,
-        //     房地产: false
-        //   }
-        // },
+        tooltip: { backgroundColor: "#555", borderWidth: 0, padding: 10 },
+        legend: {
+          data: ["Female", "Male"],
+          itemGap: 35,
+          itemHeight: 18,
+          right: "11%",
+          top: 20
+        },
         calculable: true,
         grid: {
-          top: 80,
-          bottom: 100,
+          top: 100,
+          bottom: 150,
           tooltip: {
             trigger: "axis",
             axisPointer: {
@@ -114,25 +120,38 @@ class App extends Component {
             axisLabel: {
               interval: 0,
               rotate: 55,
-              textStyle: { baseline: "top", fontSize: 10 }
+              textStyle: {
+                baseline: "top",
+                color: "#333",
+                fontSize: 10,
+                fontWeight: "bold"
+              }
             },
-            axisLine: { show: false },
+            axisLine: { lineStyle: { color: "#aaa" }, show: true },
             axisTick: { show: false },
             data: areas,
-            name: "District",
+            // name: "District",
             splitLine: { show: false },
             type: "category"
           }
         ],
         yAxis: [
           {
+            axisLabel: {
+              textStyle: { fontSize: 10 }
+            },
             axisLine: { show: false },
             axisTick: { show: false },
             name: "Population",
+            splitLine: {
+              lineStyle: {
+                type: "dotted"
+              }
+            },
             type: "value"
           }
         ],
-        series: [{ name: "Total", type: "bar" }]
+        series: [{ name: "Female", type: "bar" }, { name: "Male", type: "bar" }]
       },
       options: options
     };
@@ -145,7 +164,7 @@ class App extends Component {
           option={this.getOption()}
           notMerge={true}
           lazyUpdate={true}
-          style={{ height: "80vh", top: 50, width: "90vw" }}
+          style={{ height: "80vh", left: 50, top: 50, width: "90vw" }}
           opts={{ renderer: "svg" }}
         />
       </div>
