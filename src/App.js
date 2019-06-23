@@ -10,10 +10,9 @@ class App extends Component {
     Object.entries(populationDataFemale).forEach(entry => {
       years = [...years, entry[0]];
       entry[1].forEach(e => {
-        districts = [...districts, e.name];
+        districts = [...new Set([...districts, e.name])];
       });
     });
-    let uniqueDistricts = [...new Set(districts)];
 
     let options = years.map(year => {
       let obj = {};
@@ -127,8 +126,7 @@ class App extends Component {
             },
             axisLine: { lineStyle: { color: "#aaa" }, show: true },
             axisTick: { show: false },
-            data: uniqueDistricts,
-            // name: "District",
+            data: districts,
             splitLine: { show: false },
             type: "category"
           }
