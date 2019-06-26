@@ -7,6 +7,7 @@ class App extends Component {
   getOption = () => {
     let districts = [];
     let years = [];
+
     Object.entries(populationDataFemale).forEach(entry => {
       years = [...years, entry[0]];
       entry[1].forEach(e => {
@@ -16,10 +17,8 @@ class App extends Component {
 
     let options = years.map(year => {
       let obj = {};
-      obj.title = {
-        text: `Population of Singapore by District, ${year}`
-      };
-      obj.series = [
+
+      obj["series"] = [
         {
           stack: "group",
           data: populationDataFemale[year]
@@ -29,12 +28,16 @@ class App extends Component {
           data: populationDataMale[year]
         }
       ];
+
+      obj["title"] = {
+        text: `Population of Singapore by District, ${year}`
+      };
+
       return obj;
     });
 
     return {
       baseOption: {
-        color: ["#e91e63 ", "#354EF6"],
         timeline: {
           autoPlay: true,
           axisType: "category",
@@ -82,6 +85,7 @@ class App extends Component {
             }
           }
         },
+        color: ["#e91e63", "#354EF6"],
         title: {
           subtext: "Data from the Singapore Department of Statistics",
           textAlign: "left",
